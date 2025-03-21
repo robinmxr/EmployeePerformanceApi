@@ -11,5 +11,6 @@ namespace EmployeePerformanceApi.Data
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Metric> Metrics { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

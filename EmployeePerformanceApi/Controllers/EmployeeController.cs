@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using EmployeePerformanceApi.Services;
 using EmployeePerformanceApi.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -14,13 +15,15 @@ public class EmployeeController : ControllerBase
         _service = service;
     }
 
+    [Authorize]
     [HttpGet]
-    public IActionResult GetEmployees()
+    public async Task<IActionResult> GetEmployees()
     {
-        var employees = _service.GetEmployees();
+        var employees = await _service.GetEmployees();
         return Ok(employees);
     }
 
+    [Authorize]
     [HttpGet]
     [Route("{id}")]
     public IActionResult GetEmployee(int id)
@@ -33,6 +36,7 @@ public class EmployeeController : ControllerBase
         return Ok(employee);
     }
 
+    [Authorize(Roles="Admin")]
     [HttpPost]
     public async Task<IActionResult> AddEmployee([FromBody] EmployeeDTO employeeDto)
     {
